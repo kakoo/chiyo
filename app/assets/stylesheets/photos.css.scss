@@ -1,3 +1,14 @@
 // Place all the styles related to the Photos controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+
+ul.fphotos {
+  float: left;
+  list-style: none;
+}
+
+ul.fphotos li {
+  float: left;
+  line-height: 30px;
+  margin-left: 10px;
+}

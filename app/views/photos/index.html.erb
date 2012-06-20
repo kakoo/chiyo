@@ -1,4 +1,10 @@
-<h1>Listing photos</h1>
+<h1>my flickr photos</h1>
+
+<ul class="fphotos">
+  <% @fphotos.photo.each do |photo| %>
+  <li><%= image_tag FlickRaw.url_t(photo) %></li>
+  <% end %>
+</ul>
 
 <table>
   <tr>

@@ -1,8 +1,30 @@
 class PhotosController < ApplicationController
+  before_filter :login_flickr
+
+  def login_flickr
+    require 'flickraw'
+
+    # key...
+    # rails console
+    # http://hanklords.github.com/flickraw/
+
+    #FlickRaw.api_key       = "your api key"
+    #FlickRaw.shared_secret = "your shared secret"
+
+    #flickr.access_token  = "your access token"
+    #flickr.access_secret = "your access secret"
+
+    @flickr_user = flickr.test.login
+
+  end
   # GET /photos
   # GET /photos.json
   def index
     @photos = Photo.all
+
+    photosets   = flickr.photosets.getList
+
+    @fphotos = flickr.photosets.getPhotos :photoset_id => photosets[5].id
 
     respond_to do |format|
       format.html # index.html.erb

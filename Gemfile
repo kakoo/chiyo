@@ -7,7 +7,7 @@ gem 'rails', '3.2.3'
 
 gem 'mysql2'
 gem 'pg', :group => :production
-gem 'paperclip', "~>3.0"
+gem 'flickraw', '~> 0.9.6'
 gem 'json'
 
 # Gems used only for assets and not required
