@@ -22,9 +22,10 @@ class PhotosController < ApplicationController
   def index
     @photos = Photo.all
 
-    photosets   = flickr.photosets.getList
+    #photosets   = flickr.photosets.getList
 
-    @fphotos = flickr.photosets.getPhotos :photoset_id => photosets[5].id
+    #@fsetid  = photosets[5].id
+    @fphotos = flickr.photosets.getPhotos :photoset_id => "72157630206872398"
 
     respond_to do |format|
       format.html # index.html.erb
@@ -62,8 +63,15 @@ class PhotosController < ApplicationController
   # POST /photos
   # POST /photos.json
   def create
+    flickr_result = flickr.upload_photo params[:image].tempfile, :title => params[:photo][:title], :description => params[:photo][:name]
+    flickr_set_photoset = flickr.photosets.addPhoto :photoset_id => "72157630206872398", :photo_id => flickr_result
+
+    #logger.debug "flickr result----------------#{flickr_result}----#{flickr_set_photoset}"
+
+    #params[:photo][:flickr_photo_id] = flickr_result
     @photo = Photo.new(params[:photo])
 
+    @photo.flickr_photo_id = flickr_result
     respond_to do |format|
       if @photo.save
         format.html { redirect_to @photo, :notice => 'Photo was successfully created.' }
