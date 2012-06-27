@@ -19,7 +19,7 @@ ActiveRecord::Schema.define(:version => 20120620131427) do
     t.string   "location"
     t.datetime "created_at",      :null => false
     t.datetime "updated_at",      :null => false
-    t.integer  "flickr_photo_id"
+    t.string   "flickr_photo_id"
   end
 
 end

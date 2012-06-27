@@ -1,8 +1,8 @@
 class PhotosController < ApplicationController
-  before_filter :login_flickr
+  #before_filter :login_flickr
 
-  def login_flickr
-    require 'flickraw'
+  #def login_flickr
+    #require 'flickraw'
 
     # key...
     # rails console
@@ -14,9 +14,9 @@ class PhotosController < ApplicationController
     #flickr.access_token  = "your access token"
     #flickr.access_secret = "your access secret"
 
-    @flickr_user = flickr.test.login
+    #@flickr_user = flickr.test.login
 
-  end
+  #end
   # GET /photos
   # GET /photos.json
   def index
@@ -25,7 +25,7 @@ class PhotosController < ApplicationController
     #photosets   = flickr.photosets.getList
 
     #@fsetid  = photosets[5].id
-    @fphotos = flickr.photosets.getPhotos :photoset_id => "72157630206872398"
+    #@fphotos = flickr.photosets.getPhotos :photoset_id => "72157630312659872"
 
     respond_to do |format|
       format.html # index.html.erb
@@ -64,14 +64,15 @@ class PhotosController < ApplicationController
   # POST /photos.json
   def create
     flickr_result = flickr.upload_photo params[:image].tempfile, :title => params[:photo][:title], :description => params[:photo][:name]
-    flickr_set_photoset = flickr.photosets.addPhoto :photoset_id => "72157630206872398", :photo_id => flickr_result
+    flickr_set_photoset = flickr.photosets.addPhoto :photoset_id => "72157630312659872", :photo_id => flickr_result
 
-    #logger.debug "flickr result----------------#{flickr_result}----#{flickr_set_photoset}"
+    logger.debug "flickr result----------------#{flickr_result}----#{flickr_set_photoset}"
 
     #params[:photo][:flickr_photo_id] = flickr_result
     @photo = Photo.new(params[:photo])
 
     @photo.flickr_photo_id = flickr_result
+
     respond_to do |format|
       if @photo.save
         format.html { redirect_to @photo, :notice => 'Photo was successfully created.' }
@@ -88,6 +89,14 @@ class PhotosController < ApplicationController
   def update
     @photo = Photo.find(params[:id])
 
+    if params[:image].tempfile
+        flickr.photos.delete :photo_id => @photo.flickr_photo_id
+
+        flickr_result = flickr.upload_photo params[:image].tempfile, :title => params[:photo][:title], :description => params[:photo][:name]
+        flickr_set_photoset = flickr.photosets.addPhoto :photoset_id => "72157630312659872", :photo_id => flickr_result
+        params[:photo][:flickr_photo_id] = flickr_result
+    end
+
     respond_to do |format|
       if @photo.update_attributes(params[:photo])
         format.html { redirect_to @photo, :notice => 'Photo was successfully updated.' }
@@ -103,6 +112,7 @@ class PhotosController < ApplicationController
   # DELETE /photos/1.json
   def destroy
     @photo = Photo.find(params[:id])
+
     @photo.destroy
 
     respond_to do |format|

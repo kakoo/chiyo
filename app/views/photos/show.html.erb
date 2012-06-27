@@ -13,7 +13,7 @@
 
 <p>
   <b>Flickr Photo Id:</b>
-  <%= @photo.flickr_photo_id %>
+  <%= image_tag (FlickRaw.url_b flickr.photos.getInfo(:photo_id => @photo.flickr_photo_id)) %>
 </p>
 
 <%= link_to 'Edit', edit_photo_path(@photo) %> |
