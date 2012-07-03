@@ -21,11 +21,11 @@
   </div>
   <div>
     <%= f.label :flickr_photo_id %>
-    <%= f.text_field :flickr_photo_id %>
+    <%= @photo.flickr_photo_id %>
   </div>
   <div class="filed">
     <%= label_tag :image %>
-    <%= file_field_tag :image %>
+    <%= file_field_tag "photo[image]" %>
   </div>
   <div class="actions">
     <%= f.submit %>
