@@ -9,6 +9,7 @@ gem 'mysql2'
 gem 'pg', :group => :production
 gem 'flickraw', '~> 0.9.6'
 gem 'json'
+gem 'devise'
 
 # Gems used only for assets and not required
 # in production environments by default.

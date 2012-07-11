@@ -1,9 +1,11 @@
 class PhotosController < ApplicationController
+  before_filter :authenticate_user!
 
   # GET /photos
   # GET /photos.json
   def index
-    @photos = Photo.all
+    #@photos = Photo.where(:user_id => current_user.id)
+    @photos = current_user.photos
 
     #photosets   = flickr.photosets.getList
 
@@ -19,7 +21,8 @@ class PhotosController < ApplicationController
   # GET /photos/1
   # GET /photos/1.json
   def show
-    @photo = Photo.find(params[:id])
+    #@photo = Photo.find(params[:id])
+    @photo = current_user.photos.find(params[:id])
 
     respond_to do |format|
       format.html # show.html.erb
@@ -30,7 +33,8 @@ class PhotosController < ApplicationController
   # GET /photos/new
   # GET /photos/new.json
   def new
-    @photo = Photo.new
+    #@photo = Photo.new
+    @photo = current_user.photos.build(params[:photo])
 
     respond_to do |format|
       format.html # new.html.erb
@@ -40,13 +44,16 @@ class PhotosController < ApplicationController
 
   # GET /photos/1/edit
   def edit
-    @photo = Photo.find(params[:id])
+    #@photo = Photo.find(params[:id])
+    @photo = current_user.photos.find(params[:id])
   end
 
   # POST /photos
   # POST /photos.json
   def create
-    @photo = Photo.new(params[:photo])
+    #@photo = Photo.new(params[:photo])
+    #@photo.user_id = current_user.id
+    @photo = current_user.photos.build(params[:photo])
 
     respond_to do |format|
       if @photo.save
@@ -62,7 +69,8 @@ class PhotosController < ApplicationController
   # PUT /photos/1
   # PUT /photos/1.json
   def update
-    @photo = Photo.find(params[:id])
+    #@photo = Photo.find(params[:id])
+    @photo = current_user.photos.find(params[:id])
 
     respond_to do |format|
       if @photo.update_attributes(params[:photo])
@@ -78,7 +86,8 @@ class PhotosController < ApplicationController
   # DELETE /photos/1
   # DELETE /photos/1.json
   def destroy
-    @photo = Photo.find(params[:id])
+    #@photo = Photo.find(params[:id])
+    @photo = current_user.photos.find(params[:id])
 
     @photo.destroy
 
