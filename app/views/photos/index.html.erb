@@ -4,7 +4,6 @@
 <table>
   <tr>
     <th>Title</th>
-    <th>Name</th>
     <th></th>
     <th></th>
     <th></th>
@@ -14,7 +13,6 @@
   <tr>
     <td><%= photo.title %></td>
     <td><%= image_tag(FlickRaw.url_t flickr.photos.getInfo(:photo_id => photo.flickr_photo_id)) if photo.flickr_photo_id %></td>
-    <td><%= photo.name %></td>
     <td><%= link_to 'View', photo %></td>
     <td><%= link_to 'Edit', edit_photo_path(photo) %></td>
     <td><%= link_to 'Destroy', photo, :confirm => 'Are you sure?', :method => :delete %></td>

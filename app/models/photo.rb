@@ -8,15 +8,15 @@ class Photo < ActiveRecord::Base
   end
 
   before_create do |r|
-    r.flickr_photo_id = flickr.upload_photo r.image.tempfile, :title => r.title, :description => r.name
+    r.flickr_photo_id = flickr.upload_photo r.image.tempfile, :title => r.title
     flickr.photosets.addPhoto :photoset_id => "72157630312659872", :photo_id => r.flickr_photo_id
   end
 
   before_update do |r|
-    if r.image.tempfile
+    if r.image.try(:tempfile)
       flickr.photos.delete :photo_id => r.flickr_photo_id
 
-      r.flickr_photo_id = flickr.upload_photo r.image.tempfile, :title => r.title, :description => r.name
+      r.flickr_photo_id = flickr.upload_photo r.image.tempfile, :title => r.title
       flickr.photosets.addPhoto :photoset_id => "72157630312659872", :photo_id => r.flickr_photo_id
     end
   end
