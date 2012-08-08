@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120718123051) do
+ActiveRecord::Schema.define(:version => 20120731120347) do
 
   create_table "photos", :force => true do |t|
     t.string   "title"
@@ -21,6 +21,16 @@ ActiveRecord::Schema.define(:version => 20120718123051) do
     t.string   "flickr_photo_id"
     t.integer  "user_id"
   end
+
+  create_table "sessions", :force => true do |t|
+    t.string   "session_id", :null => false
+    t.text     "data"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
+  add_index "sessions", ["session_id"], :name => "index_sessions_on_session_id"
+  add_index "sessions", ["updated_at"], :name => "index_sessions_on_updated_at"
 
   create_table "users", :force => true do |t|
     t.string   "email",                  :default => "", :null => false
@@ -35,8 +45,10 @@ ActiveRecord::Schema.define(:version => 20120718123051) do
     t.string   "last_sign_in_ip"
     t.datetime "created_at",                             :null => false
     t.datetime "updated_at",                             :null => false
-    t.string   "provider"
-    t.string   "uid"
+    t.string   "flickr_uid"
+    t.string   "flickr_token"
+    t.string   "flickr_secret"
+    t.string   "flickr_photoset_id"
   end
 
   add_index "users", ["email"], :name => "index_users_on_email", :unique => true
