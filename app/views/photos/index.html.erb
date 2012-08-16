@@ -1,8 +1,8 @@
 <h1>my flickr photos</h1>
 
-<%= link_to "Sign in with Flickr", omniauth_authorize_path("user", "flickr") %><br />
+<%= link_to "User edit", edit_user_registration_path, :method => :get %><br />
 
-<%=  link_to "Sign out", destroy_user_session_path, :method => :delete %>
+<%= link_to "Sign out", destroy_user_session_path, :method => :delete %>
 
 <table>
   <tr>
