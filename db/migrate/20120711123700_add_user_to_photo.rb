@@ -4,7 +4,7 @@ class AddUserToPhoto < ActiveRecord::Migration
     add_column :photos, :user_id, :integer
     remove_column :photos, :name
     user = User.all.first
-    Photo.all.each {|photo| photo.update_attribute :user_id, user.id}
+    Photo.all.each {|photo| photo.update_attribute :user_id, user.id} unless user.nil?
   end
 
   def self.down
