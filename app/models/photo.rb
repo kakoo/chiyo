@@ -22,8 +22,8 @@ class Photo < ActiveRecord::Base
     if r.image.try(:tempfile)
       r.user.flickr.photos.delete :photo_id => r.flickr_photo_id
 
-      r.flickr_photo_id = r.flickr.upload_photo r.image.tempfile, :title => r.title
-      r.flickr.photosets.addPhoto :photoset_id => r.user.flickr_photoset_id, :photo_id => r.flickr_photo_id
+      r.flickr_photo_id = r.user.flickr.upload_photo r.image.tempfile, :title => r.title
+      r.user.flickr.photosets.addPhoto :photoset_id => r.user.flickr_photoset_id, :photo_id => r.flickr_photo_id
     end
   end
 end
